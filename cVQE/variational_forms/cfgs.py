@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from itertools import product
 from typing import List, Optional, Union
 
 import numpy as np
@@ -27,9 +28,7 @@ class CompressedFermionicGaussianState(VariationalForm):
     starting with a compressed Fermionic Gaussian state and applying a
     special orthogonal rotation from the SO(n**2) group in n qubits.
     """
-    def __init__(self,
-                 num_qubits: int,
-                 method: str = 'CRY',
+    def __init__(self, num_qubits: int, method: str = 'CRY',
                  initial_state: Optional[InitialState] = None,
                  son_registers: Optional[List[int]] = None,
                  count_extra_qubits: bool = False) -> None:
@@ -67,8 +66,8 @@ class CompressedFermionicGaussianState(VariationalForm):
 
     def construct_circuit(self, parameters: Union[List[float], np.ndarray],
                           q: Optional[QuantumRegister] = None,
-                          derivative = None,
-                          shift = None) -> QuantumCircuit:
+                          derivative: int = None,
+                          shift: float = None) -> QuantumCircuit:
         """
         Construct the variational form, given its parameters.
 
@@ -166,12 +165,10 @@ class CompressedFermionicGaussianState(VariationalForm):
                 qc.cnot(controlled, qubit_pairs[1] + qubit_pairs[2])
             if qubit_pairs[0] or qubit_pairs[1]:
                 qc.x(qubit_pairs[0] + qubit_pairs[1])
-            
-            qc.barrier()
-
+                        
         return qc
 
-    def get_gradient_callable(self, operator, quantum_instance):
+    def get_gradient_callable(self, operator, quantum_instance=None):
         """
         Create a callable that evaluates the gradient of the ansatz expectation value 
         w.r.t. the ansatz parameters
@@ -189,11 +186,10 @@ class CompressedFermionicGaussianState(VariationalForm):
         from qiskit.aqua.operators.state_fns import StateFn
         from qiskit.aqua.operators.converters import CircuitSampler
 
-        parameters = ParameterVector('p', self._num_parameters)
+        parameters = ParameterVector('θ', self._num_parameters)
         derivatives = []
         observable_operator = ~StateFn(Z^operator)
         for i in range(len(parameters)):
-            print(i)
             derivative = []
             for shift in [1, -1]:
                 op = observable_operator @ StateFn(self.construct_circuit(parameters, derivative=i, shift=shift*np.pi/2))
@@ -212,6 +208,6 @@ class CompressedFermionicGaussianState(VariationalForm):
                     gradient_operator, p_values_dict)
                 gradient = gradient.eval()[0]
             
-            return list(map(np.real, gradient))
+            return np.array(list(map(np.real, gradient)))
 
         return gradient_fn
