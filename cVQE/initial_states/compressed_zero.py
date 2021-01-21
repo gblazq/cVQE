@@ -22,7 +22,7 @@ class CompressedZero(InitialState):
     r"""
     The purified, compressed |0>^n state, i.e. the state
 
-    \frac{1}{\sqrt{2n}}\sum_{j=0}^{2^(n - 1) - 1}{|j>|0>|j> +i|j>|1>|j>}
+    \frac{1}{\sqrt{2n}}\sum_{j=0}^{2^{n - 1} - 1}{\vert j \rangle \vert 0 \rangle \vert j \rangle +i\vert j\rangle \vert 1 \rangle \vert j\rangle}
     """
     def __init__(self, num_qubits):
         """
