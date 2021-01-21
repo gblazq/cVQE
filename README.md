@@ -173,8 +173,11 @@ where one can see the state initialization and the SO(4) rotation composed by 6 
 ### References
 
 [1] [Jozsa, R. and Miyake, A. Matchgates and classical simulation of quantum circuits](https://arxiv.org/abs/0804.4050)
+
 [2] [Jozsa, R. et al. Matchgate and space-bounded quantum computations are equivalent](https://arxiv.org/abs/0908.1467)
+
 [3] [Boyajian, W. L. Matchgate circuits and compressed quantum computation](https://inis.iaea.org/collection/NCLCollectionStore/_Public/48/059/48059246.pdf)
+
 [4] [Frerix, T. and Bruna, J. Approximating Orthogonal Matrices with Effective Givens Factorization](https://arxiv.org/abs/1905.05796)
 
 ## TODO
