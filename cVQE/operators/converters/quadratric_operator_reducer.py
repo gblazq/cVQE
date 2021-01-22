@@ -39,11 +39,16 @@ class QuadraticOperatorReducer(ConverterBase):
 
     Note that the compression of any such operator with 2-qubit terms will result in an operator
     that has an exponential number of terms in the Pauli basis, but the operation can be done in linear space
+
+    Args:
+        density: whether to return the original operator's density or the original operator.
+            Defaults to True
     """
-    def __init__(self):
+    def __init__(self, density=True):
         super().__init__()
         self._zero_coeff_nuller = ZeroCoeffNuller(traverse=True)
         self._tensored_op_distributor = TensoredOpDistributor()
+        self._density = density
 
     def convert(self, operator: OperatorBase):
         """
@@ -76,8 +81,12 @@ class QuadraticOperatorReducer(ConverterBase):
             h += xx_yy + xy_yx
         
         h = self._tensored_op_distributor.convert(self._zero_coeff_nuller.convert(h))
+        h = (2j*h).reduce()
 
-        return (2j*h).reduce()
+        if self._density:
+            return h
+        else:
+            return h * operator.num_qubits
 
     def _find_coefficients(self, operator: OperatorBase):
         """
