@@ -17,7 +17,7 @@ cVQE requires Qiskit >= 0.23.1.
 
 ## Running compressed VQEs
 
-To run a VQE algorithm in compressed space you'll need to compress the Hamiltonian and use an appropriate ansatz. cVQE provides a converter to compress quadratic homogeneous Hamiltonians, and a variational form and initial state to build an ansatz that can explore the whole set of quadratic Hamiltonians eigenstates:
+To run a VQE algorithm in compressed space you'll need to compress the Hamiltonian and use an appropriate ansatz. cVQE provides a converter to compress 1D quadratic homogeneous Hamiltonians, and a variational form and initial state to build an ansatz that can explore the whole set of quadratic Hamiltonians eigenstates:
 
 ```python
 from qiskit.aqua.operators.operator_globals import I, X, Z
@@ -82,7 +82,7 @@ The compression of a quadratic Hamiltonian relies on the fact that it can be wri
 
 ![Image](images/H.png)
 
-In terms of the Pauli matrices, a quadratic Hamiltonian can only have the nearest-neighbour terms Z, XX, YY, XY and YX; and the compressed matrix `a` takes the form
+In terms of the Pauli matrices, a 1D quadratic Hamiltonian can only have the nearest-neighbour terms Z, XX, YY, XY and YX; and the compressed matrix `a` takes the form
 
 ![Image](images/compressed_matrix.png)
 
@@ -90,7 +90,7 @@ where `C_{O_{i,j}}` is the coefficient of the operator `O` acting on qubits `i` 
 
 In order to use the compressed Hamiltonian in a VQE algorithm, we need to know its decomposition in the basis of tensors of Pauli matrices. In general, this decomposition will have an exponential number of terms, posing problems to find the exponential number of coefficients and to measure the decomposition is known. 
 
-Here we provide a classical algorithm to find the exponentially large decomposition of a homogeneous quadratic Hamiltonian. Each of the Pauli string coefficients can be found in linear time and constant space. Moreover, despite the exponentially growing number of terms in the decomposition, commuting terms can be grouped so that the number of measurements grows linearly with the number of qubits of the compressed circuit.
+Here we provide a classical algorithm to find the exponentially large decomposition of a 1D homogeneous quadratic Hamiltonian. Each of the Pauli string coefficients can be found in linear time and constant space. Moreover, despite the exponentially growing number of terms in the decomposition, commuting terms can be grouped so that the number of measurements grows linearly with the number of qubits of the compressed circuit.
 
 First, notice that if the Hamiltonian is homogeneous, we can build `a` iteratively by using the fact that it's a banded matrix with repeating coefficients:
 

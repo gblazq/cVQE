@@ -12,7 +12,7 @@ requirements = [
 
 setuptools.setup(
     name="cVQE",
-    version="0.0.1",
+    version="0.0.2",
     author="Guillermo Blázquez",
     description="A package to run Variational Quantum Eigensolvers on compressed space in Qiskit",
     long_description=long_description,
