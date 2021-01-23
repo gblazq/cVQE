@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .quadratric_operator_reducer import QuadraticOperatorReducer
+from .quadratic_operator_reducer import QuadraticOperatorReducer
 from .tensoredop_distributor import TensoredOpDistributor
 from .zero_coeff_nuller import ZeroCoeffNuller
 
